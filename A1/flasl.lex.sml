@@ -2,7 +2,7 @@ structure FlaslLex=
    struct
     structure UserDeclarations =
       struct
-
+(*#line 1.1 "flasl.lex"*)
 
 datatype lexresult= IF | THEN | ELSE | AND | OR | NOT | IFF | THEREFORE | ATOM of string | SPACE | PERIOD | COMMA | LPAREN | RPAREN | EOF
 fun error (x) = TextIO.output(TextIO.stdOut, x^"\n")
@@ -12,6 +12,7 @@ fun eof () = EOF
 val line = ref 1
 val column = ref 1
 
+(*#line 15.1 "flasl.lex.sml"*)
 end (* end of user routines *)
 exception LexError (* raised if illegal leaf action tried *)
 structure Internal =
@@ -277,12 +278,12 @@ val s = [
 ),
 (0, "")]
 fun f x = x 
-val s = List.map f (List.rev (tl (List.rev s))) 
+val s = map f (rev (tl (rev s))) 
 exception LexHackingError 
 fun look ((j,x)::r, i: int) = if i = j then x else look(r, i) 
   | look ([], i) = raise LexHackingError
 fun g {fin=x, trans=i} = {fin=x, trans=look(s,i)} 
-in Vector.fromList(List.map g 
+in Vector.fromList(map g 
 [{fin = [], trans = 0},
 {fin = [], trans = 1},
 {fin = [], trans = 1},
@@ -336,8 +337,9 @@ type result = UserDeclarations.lexresult
 	exception LexerError (* raised if illegal leaf action tried *)
 end
 
+structure YYPosInt : INTEGER = Int
 fun makeLexer yyinput =
-let	val yygone0=1
+let	val yygone0= YYPosInt.fromInt ~1
 	val yyb = ref "\n" 		(* buffer *)
 	val yybl = ref 1		(*buffer length *)
 	val yybufpos = ref 1		(* location of next character to use *)
@@ -356,58 +358,74 @@ let fun continue() = lex() in
 	| action (i,(node::acts)::l) =
 		case node of
 		    Internal.N yyk => 
-			(let fun yymktext() = String.substring(!yyb,i0,i-i0)
-			     val yypos = i0+ !yygone
+			(let fun yymktext() = substring(!yyb,i0,i-i0)
+			     val yypos = YYPosInt.+(YYPosInt.fromInt i0, !yygone)
 			open UserDeclarations Internal.StartStates
  in (yybufpos := i; case yyk of 
 
 			(* Application actions *)
 
-  10 => let val yytext=yymktext() in column := (!column) + (size yytext); COMMA end
-| 12 => let val yytext=yymktext() in column := (!column) + (size yytext); LPAREN end
-| 14 => let val yytext=yymktext() in column := (!column) + (size yytext); RPAREN end
-| 17 => let val yytext=yymktext() in column := (!column) + (size yytext); IF end
-| 22 => let val yytext=yymktext() in column := (!column) + (size yytext); THEN end
-| 27 => let val yytext=yymktext() in column := (!column) + (size yytext); ELSE end
-| 3 => (line := (!line) + 1; column := 1; lex())
-| 31 => let val yytext=yymktext() in column := (!column) + (size yytext); AND end
-| 34 => let val yytext=yymktext() in column := (!column) + (size yytext); OR end
-| 38 => let val yytext=yymktext() in column := (!column) + (size yytext); NOT end
-| 42 => let val yytext=yymktext() in column := (!column) + (size yytext); IFF end
-| 52 => let val yytext=yymktext() in column := (!column) + (size yytext); THEREFORE end
-| 6 => let val yytext=yymktext() in column := (!column) + (size yytext); SPACE end
-| 61 => let val yytext=yymktext() in column := (!column) + (size yytext); ATOM yytext end
-| 63 => let val yytext=yymktext() in error ("ScanError. Line: " ^ (Int.toString(!line)) ^ ", Column:" ^(Int.toString(!column))^". Error Character:'"^yytext^"'."); column := (!column) + (size yytext); lex() end
-| 8 => let val yytext=yymktext() in column := (!column) + (size yytext); PERIOD end
+  10 => let val yytext=yymktext() in (*#line 26.17 "flasl.lex"*)column := (!column) + (size yytext); COMMA(*#line 368.1 "flasl.lex.sml"*)
+ end
+| 12 => let val yytext=yymktext() in (*#line 27.17 "flasl.lex"*)column := (!column) + (size yytext); LPAREN(*#line 370.1 "flasl.lex.sml"*)
+ end
+| 14 => let val yytext=yymktext() in (*#line 28.17 "flasl.lex"*)column := (!column) + (size yytext); RPAREN(*#line 372.1 "flasl.lex.sml"*)
+ end
+| 17 => let val yytext=yymktext() in (*#line 29.17 "flasl.lex"*)column := (!column) + (size yytext); IF(*#line 374.1 "flasl.lex.sml"*)
+ end
+| 22 => let val yytext=yymktext() in (*#line 30.17 "flasl.lex"*)column := (!column) + (size yytext); THEN(*#line 376.1 "flasl.lex.sml"*)
+ end
+| 27 => let val yytext=yymktext() in (*#line 31.17 "flasl.lex"*)column := (!column) + (size yytext); ELSE(*#line 378.1 "flasl.lex.sml"*)
+ end
+| 3 => ((*#line 23.17 "flasl.lex"*)line := (!line) + 1; column := 1; lex()(*#line 380.1 "flasl.lex.sml"*)
+)
+| 31 => let val yytext=yymktext() in (*#line 32.17 "flasl.lex"*)column := (!column) + (size yytext); AND(*#line 382.1 "flasl.lex.sml"*)
+ end
+| 34 => let val yytext=yymktext() in (*#line 33.17 "flasl.lex"*)column := (!column) + (size yytext); OR(*#line 384.1 "flasl.lex.sml"*)
+ end
+| 38 => let val yytext=yymktext() in (*#line 34.17 "flasl.lex"*)column := (!column) + (size yytext); NOT(*#line 386.1 "flasl.lex.sml"*)
+ end
+| 42 => let val yytext=yymktext() in (*#line 35.17 "flasl.lex"*)column := (!column) + (size yytext); IFF(*#line 388.1 "flasl.lex.sml"*)
+ end
+| 52 => let val yytext=yymktext() in (*#line 36.17 "flasl.lex"*)column := (!column) + (size yytext); THEREFORE(*#line 390.1 "flasl.lex.sml"*)
+ end
+| 6 => let val yytext=yymktext() in (*#line 24.17 "flasl.lex"*)column := (!column) + (size yytext); SPACE(*#line 392.1 "flasl.lex.sml"*)
+ end
+| 61 => let val yytext=yymktext() in (*#line 37.17 "flasl.lex"*)column := (!column) + (size yytext); ATOM yytext(*#line 394.1 "flasl.lex.sml"*)
+ end
+| 63 => let val yytext=yymktext() in (*#line 38.17 "flasl.lex"*)error ("ScanError. Line: " ^ (Int.toString(!line)) ^ ", Column:" ^(Int.toString(!column))^". Error Character:'"^yytext^"'."); column := (!column) + (size yytext); lex()(*#line 396.1 "flasl.lex.sml"*)
+ end
+| 8 => let val yytext=yymktext() in (*#line 25.17 "flasl.lex"*)column := (!column) + (size yytext); PERIOD(*#line 398.1 "flasl.lex.sml"*)
+ end
 | _ => raise Internal.LexerError
 
 		) end )
 
-	val {fin,trans} = Unsafe.Vector.sub(Internal.tab, s)
+	val {fin,trans} = Vector.sub(Internal.tab, s)
 	val NewAcceptingLeaves = fin::AcceptingLeaves
 	in if l = !yybl then
 	     if trans = #trans(Vector.sub(Internal.tab,0))
 	       then action(l,NewAcceptingLeaves
 ) else	    let val newchars= if !yydone then "" else yyinput 1024
-	    in if (String.size newchars)=0
+	    in if (size newchars)=0
 		  then (yydone := true;
 		        if (l=i0) then UserDeclarations.eof ()
 		                  else action(l,NewAcceptingLeaves))
 		  else (if i0=l then yyb := newchars
-		     else yyb := String.substring(!yyb,i0,l-i0)^newchars;
-		     yygone := !yygone+i0;
-		     yybl := String.size (!yyb);
+		     else yyb := substring(!yyb,i0,l-i0)^newchars;
+		     yygone := YYPosInt.+(!yygone, YYPosInt.fromInt i0);
+		     yybl := size (!yyb);
 		     scan (s,AcceptingLeaves,l-i0,0))
 	    end
-	  else let val NewChar = Char.ord(Unsafe.CharVector.sub(!yyb,l))
+	  else let val NewChar = Char.ord(CharVector.sub(!yyb,l))
 		val NewChar = if NewChar<128 then NewChar else 128
-		val NewState = Char.ord(Unsafe.CharVector.sub(trans,NewChar))
+		val NewState = Char.ord(CharVector.sub(trans,NewChar))
 		in if NewState=0 then action(l,NewAcceptingLeaves)
 		else scan(NewState,NewAcceptingLeaves,l+1,i0)
 	end
 	end
 (*
-	val start= if String.substring(!yyb,!yybufpos-1,1)="\n"
+	val start= if substring(!yyb,!yybufpos-1,1)="\n"
 then !yybegin+1 else !yybegin
 *)
 	in scan(!yybegin (* start *),nil,!yybufpos,!yybufpos)
