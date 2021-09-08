@@ -1,0 +1,14 @@
+Program ::= {Statement}
+Statement ::= Formula TERM
+Formula ::= IF Formula THEN Formula ELSE Formula | exp
+exp     ::= exp2 IMPLIES exp | exp2
+exp2    ::= exp2 {binop exp3}
+exp3    ::= NOT exp3 | ID | CONST | LParen Formula RParen | Formula
+TERM    ::= ";"
+ID      ::= Character {Character}
+Character ::= 'A' | 'B' | 'C' | 'D'....  | 'Z'
+binop ::= AND | OR | XOR | EQUALS
+CONST ::= "TRUE" | "FALSE"
+LParen ::= "("
+RParen ::= ")"
+
