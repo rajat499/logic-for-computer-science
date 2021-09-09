@@ -13,13 +13,15 @@ struct
     IF then Else has been handle by suitable paranthesisation in IF-Expression itself. 
     For the EBNF(Extended Backus-Naur Form) the terminals and non terminals are as defined below in code.
     Parentheses enclose a derivation
+    
+    ==================EBNF========================
 
     main -> [propList] therefore_stmnt
     therefore_stmnt -> THEREFORE prop
     propList -> prop [propList]
     prop -> iff_expression PERIOD
     iff_expression -> if_expression [IFF iff_expression]
-    if_expression -> IF if_expression THEN or_expresssion [ELSE or_expression]  | [or_expression IF] if_expression
+    if_expression -> IF or_expression THEN if_expresssion [ELSE if_expression]  | [if_expression IF] or_expression
     or_expression -> [or_expression OR] and_expression
     and_expression -> [and_expression AND] not_expression
     not_expression -> NOT not_expression | parantheses
@@ -27,6 +29,7 @@ struct
     atomic_expression -> DQ [atomic_list] DQ
     atomic_list -> ATOM [atomic_list]
 *)
+
 
 end
 structure LrTable = Token.LrTable
@@ -37,7 +40,7 @@ val table=let val actionRows =
 \\001\000\001\000\017\000\006\000\016\000\008\000\015\000\011\000\014\000\
 \\013\000\013\000\000\000\
 \\001\000\001\000\017\000\006\000\016\000\011\000\014\000\013\000\013\000\000\000\
-\\001\000\002\000\039\000\000\000\
+\\001\000\002\000\039\000\005\000\019\000\000\000\
 \\001\000\006\000\016\000\011\000\014\000\013\000\013\000\000\000\
 \\001\000\008\000\015\000\000\000\
 \\001\000\009\000\022\000\000\000\
@@ -52,11 +55,11 @@ val table=let val actionRows =
 \\048\000\001\000\017\000\006\000\016\000\011\000\014\000\013\000\013\000\000\000\
 \\049\000\000\000\
 \\050\000\000\000\
-\\051\000\007\000\021\000\000\000\
-\\052\000\003\000\041\000\005\000\019\000\000\000\
-\\053\000\000\000\
-\\054\000\005\000\019\000\000\000\
-\\055\000\001\000\020\000\005\000\019\000\000\000\
+\\051\000\001\000\021\000\007\000\020\000\000\000\
+\\052\000\001\000\021\000\003\000\041\000\000\000\
+\\053\000\005\000\019\000\000\000\
+\\054\000\001\000\021\000\000\000\
+\\055\000\005\000\019\000\000\000\
 \\056\000\004\000\018\000\000\000\
 \\057\000\004\000\018\000\000\000\
 \\058\000\000\000\
@@ -74,13 +77,13 @@ val actionRowNumbers =
 "\000\000\029\000\027\000\025\000\
 \\023\000\021\000\017\000\005\000\
 \\014\000\004\000\011\000\007\000\
-\\001\000\001\000\003\000\001\000\
-\\003\000\003\000\001\000\001\000\
+\\001\000\001\000\003\000\003\000\
+\\003\000\003\000\001\000\003\000\
 \\015\000\013\000\010\000\008\000\
 \\033\000\031\000\006\000\012\000\
 \\026\000\002\000\024\000\022\000\
-\\019\000\016\000\030\000\032\000\
-\\028\000\003\000\018\000\003\000\
+\\016\000\019\000\030\000\032\000\
+\\028\000\001\000\018\000\001\000\
 \\020\000\009\000"
 val gotoT =
 "\
@@ -105,14 +108,14 @@ val gotoT =
 \\004\000\027\000\005\000\007\000\006\000\006\000\007\000\005\000\
 \\008\000\004\000\009\000\003\000\010\000\002\000\011\000\001\000\000\000\
 \\009\000\028\000\010\000\002\000\011\000\001\000\000\000\
-\\006\000\029\000\007\000\005\000\008\000\004\000\009\000\003\000\
-\\010\000\002\000\011\000\001\000\000\000\
+\\007\000\029\000\008\000\004\000\009\000\003\000\010\000\002\000\
+\\011\000\001\000\000\000\
 \\009\000\030\000\010\000\002\000\011\000\001\000\000\000\
 \\008\000\031\000\009\000\003\000\010\000\002\000\011\000\001\000\000\000\
-\\006\000\032\000\007\000\005\000\008\000\004\000\009\000\003\000\
-\\010\000\002\000\011\000\001\000\000\000\
-\\005\000\033\000\006\000\006\000\007\000\005\000\008\000\004\000\
+\\005\000\032\000\006\000\006\000\007\000\005\000\008\000\004\000\
 \\009\000\003\000\010\000\002\000\011\000\001\000\000\000\
+\\007\000\033\000\008\000\004\000\009\000\003\000\010\000\002\000\
+\\011\000\001\000\000\000\
 \\000\000\
 \\000\000\
 \\000\000\
@@ -130,11 +133,11 @@ val gotoT =
 \\000\000\
 \\000\000\
 \\000\000\
-\\007\000\038\000\008\000\004\000\009\000\003\000\010\000\002\000\
-\\011\000\001\000\000\000\
+\\006\000\038\000\007\000\005\000\008\000\004\000\009\000\003\000\
+\\010\000\002\000\011\000\001\000\000\000\
 \\000\000\
-\\007\000\040\000\008\000\004\000\009\000\003\000\010\000\002\000\
-\\011\000\001\000\000\000\
+\\006\000\040\000\007\000\005\000\008\000\004\000\009\000\003\000\
+\\010\000\002\000\011\000\001\000\000\000\
 \\000\000\
 \\000\000\
 \"
@@ -327,35 +330,35 @@ end)
  in ( LrTable.NT 4, ( result, if_expr1left, if_expr1right), rest671)
 
 end
-|  ( 8, ( ( _, ( MlyValue.or_expr or_expr1, _, or_expr1right)) :: _ ::
- ( _, ( MlyValue.if_expr if_expr1, _, _)) :: ( _, ( _, IF1left, _)) ::
+|  ( 8, ( ( _, ( MlyValue.if_expr if_expr1, _, if_expr1right)) :: _ ::
+ ( _, ( MlyValue.or_expr or_expr1, _, _)) :: ( _, ( _, IF1left, _)) ::
  rest671)) => let val  result = MlyValue.if_expr (fn _ => let val  (
-if_expr as if_expr1) = if_expr1 ()
- val  (or_expr as or_expr1) = or_expr1 ()
- in (AST.COND(if_expr, or_expr))
-end)
- in ( LrTable.NT 5, ( result, IF1left, or_expr1right), rest671)
-end
-|  ( 9, ( ( _, ( MlyValue.if_expr if_expr1, _, if_expr1right)) :: _ ::
- ( _, ( MlyValue.or_expr or_expr1, or_expr1left, _)) :: rest671)) =>
- let val  result = MlyValue.if_expr (fn _ => let val  (or_expr as 
-or_expr1) = or_expr1 ()
+or_expr as or_expr1) = or_expr1 ()
  val  (if_expr as if_expr1) = if_expr1 ()
- in (AST.COND(if_expr, or_expr))
+ in (AST.COND(or_expr, if_expr))
 end)
- in ( LrTable.NT 5, ( result, or_expr1left, if_expr1right), rest671)
+ in ( LrTable.NT 5, ( result, IF1left, if_expr1right), rest671)
+end
+|  ( 9, ( ( _, ( MlyValue.or_expr or_expr1, _, or_expr1right)) :: _ ::
+ ( _, ( MlyValue.if_expr if_expr1, if_expr1left, _)) :: rest671)) =>
+ let val  result = MlyValue.if_expr (fn _ => let val  (if_expr as 
+if_expr1) = if_expr1 ()
+ val  (or_expr as or_expr1) = or_expr1 ()
+ in (AST.COND(or_expr, if_expr))
+end)
+ in ( LrTable.NT 5, ( result, if_expr1left, or_expr1right), rest671)
 
 end
-|  ( 10, ( ( _, ( MlyValue.or_expr or_expr2, _, or_expr2right)) :: _
- :: ( _, ( MlyValue.or_expr or_expr1, _, _)) :: _ :: ( _, ( 
-MlyValue.if_expr if_expr1, _, _)) :: ( _, ( _, IF1left, _)) :: rest671
-)) => let val  result = MlyValue.if_expr (fn _ => let val  (if_expr
- as if_expr1) = if_expr1 ()
- val  or_expr1 = or_expr1 ()
- val  or_expr2 = or_expr2 ()
- in (AST.ITE(if_expr, or_expr1, or_expr2))
+|  ( 10, ( ( _, ( MlyValue.if_expr if_expr2, _, if_expr2right)) :: _
+ :: ( _, ( MlyValue.if_expr if_expr1, _, _)) :: _ :: ( _, ( 
+MlyValue.or_expr or_expr1, _, _)) :: ( _, ( _, IF1left, _)) :: rest671
+)) => let val  result = MlyValue.if_expr (fn _ => let val  (or_expr
+ as or_expr1) = or_expr1 ()
+ val  if_expr1 = if_expr1 ()
+ val  if_expr2 = if_expr2 ()
+ in (AST.ITE(or_expr, if_expr1, if_expr2))
 end)
- in ( LrTable.NT 5, ( result, IF1left, or_expr2right), rest671)
+ in ( LrTable.NT 5, ( result, IF1left, if_expr2right), rest671)
 end
 |  ( 11, ( ( _, ( MlyValue.or_expr or_expr1, or_expr1left, 
 or_expr1right)) :: rest671)) => let val  result = MlyValue.if_expr (fn

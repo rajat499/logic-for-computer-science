@@ -3,13 +3,15 @@
     IF then Else has been handle by suitable paranthesisation in IF-Expression itself. 
     For the EBNF(Extended Backus-Naur Form) the terminals and non terminals are as defined below in code.
     Parentheses enclose a derivation
+    
+    ==================EBNF========================
 
     main -> [propList] therefore_stmnt
     therefore_stmnt -> THEREFORE prop
     propList -> prop [propList]
     prop -> iff_expression PERIOD
     iff_expression -> if_expression [IFF iff_expression]
-    if_expression -> IF if_expression THEN or_expresssion [ELSE or_expression]  | [or_expression IF] if_expression
+    if_expression -> IF or_expression THEN if_expresssion [ELSE if_expression]  | [if_expression IF] or_expression
     or_expression -> [or_expression OR] and_expression
     and_expression -> [and_expression AND] not_expression
     not_expression -> NOT not_expression | parantheses
@@ -17,6 +19,7 @@
     atomic_expression -> DQ [atomic_list] DQ
     atomic_list -> ATOM [atomic_list]
 *)
+
 %%
 
 %name flasl
@@ -24,7 +27,7 @@
 %term IF | THEN | ELSE | AND | OR | NOT | IFF | THEREFORE | PERIOD | COMMA | LPAREN | RPAREN | DQ | EOF | ATOM of string
 
 %left AND OR
-%right IF IFF
+%right IF THEN ELSE IFF
 
 %eop EOF
 %noshift EOF
@@ -58,9 +61,9 @@ iff_expr:
     |   if_expr                         (if_expr)
 
 if_expr:
-        IF if_expr THEN or_expr                 (AST.COND(if_expr, or_expr))
-    |   or_expr IF if_expr                      (AST.COND(if_expr, or_expr))
-    |   IF if_expr THEN or_expr ELSE or_expr    (AST.ITE(if_expr, or_expr1, or_expr2))
+        IF or_expr THEN if_expr                 (AST.COND(or_expr, if_expr))
+    |   if_expr IF or_expr                      (AST.COND(or_expr, if_expr))
+    |   IF or_expr THEN if_expr ELSE if_expr    (AST.ITE(or_expr, if_expr1, if_expr2))
     |   or_expr                                 (or_expr)
 
 or_expr:
