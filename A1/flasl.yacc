@@ -1,77 +1,91 @@
-val space  = " "
-type loc = (int * int) * (int * int)
+(*
+    The precedence order is NOT>AND>OR>IF-Expression[if then/if]>IFF.
+    IF then Else has been handle by suitable paranthesisation in IF-Expression itself. 
+    For the EBNF(Extended Backus-Naur Form) the terminals and non terminals are as defined below in code.
+    Parentheses enclose a derivation
+    
+    ==================EBNF========================
+
+    main ::= [propList] therefore_stmnt
+    therefore_stmnt ::= THEREFORE prop
+    propList ::= prop [propList]
+    prop ::= iff_expression PERIOD
+    iff_expression ::= if_expression [IFF iff_expression]
+    if_expression ::= IF or_expression THEN if_expresssion [ELSE if_expression]  | [if_expression IF] or_expression
+    or_expression ::= [or_expression OR] and_expression
+    and_expression ::= [and_expression AND] not_expression
+    not_expression ::= NOT not_expression | parantheses
+    parantheses ::= LPAREN iff_expression RPAREN | atomic_expression
+    atomic_expression ::= DQ [atomic_list] DQ
+    atomic_list ::= ATOM [atomic_list]
+*)
+
 %%
-%name Bool
 
-%term 
-    IF | THEN | ELSE | NOT | AND | OR | IFF | THEREFORE 
+%name flasl
 
-/* Starter Code */
+%term IF | THEN | ELSE | AND | OR | NOT | IFF | THEREFORE | PERIOD | LPAREN | RPAREN | DQ | EOF | ATOM of string
 
-%nonterm  
-  start of AST.exp list 
-| program of AST.exp list
-| formula of AST.exp
-| expression of AST.exp
-| lambda of AST.exp
-| typ of AST.typ
-
-%pos int
+%left AND OR
+%right IF THEN ELSE IFF
 
 %eop EOF
 %noshift EOF
 
-(* header *)
+%nonterm main of AST.Argument | therefore_stmnt of AST.Prop | propList of AST.Prop list 
+            | prop of AST.Prop | iff_expr of AST.Prop | if_expr of AST.Prop
+            | or_expr of AST.Prop | and_expr of AST.Prop | not_expr of AST.Prop
+            | parentheses of AST.Prop | atomic_expression of AST.Prop 
+            | atomic_list of string 
 
-%right LET IN END ASSIGN
-%right ARROWDEF COLON FN FUN ARROWTYP
-
-%right IF THEN ELSE FI
-%right IMPLIES
-%left  AND OR XOR 
-%left  EQUALS 
-%left  LESSTHAN GREATERTHAN (* TODO *)
-%left  PLUS MINUS
-%left  TIMES
-%right NOT NEGATE
-
-%nonassoc LPAREN RPAREN
-
-%start start
+%pos int
 
 %verbose
-
 %%
-start       :   program (program)
-program     :   expression TERM program (expression :: program) | expression ([expression]) | expression TERM ([expression])
-expression  :   formula (formula) 
-            |   FUN ID LPAREN ID COLON typ RPAREN COLON typ ARROWDEF formula (AST.FunctionExp( (AST.VarExp ID1), (AST.VarExp ID2), typ1, typ2, formula, (#1 FUN) ))
+main:
+        propList therefore_stmnt        (AST.HENCE(propList, therefore_stmnt))
+    |   therefore_stmnt                 (AST.HENCE([], therefore_stmnt))
 
-typ         :   INT (AST.Int) | BOOL (AST.Bool) | typ ARROWTYP typ (AST.Arrow(typ1, typ2)) | LPAREN typ RPAREN (typ)
-lambda      :   FN LPAREN ID COLON typ RPAREN COLON typ ARROWDEF formula (AST.LambdaExp((AST.VarExp ID), typ1, typ2, formula, (#1 FN)))
+therefore_stmnt:
+        THEREFORE prop                  (prop)
 
-formula     :   IF formula THEN formula ELSE formula FI (AST.CondExp(formula1, formula2, formula3, (#1 IF, #2 FI) ))
-            |   LET ID ASSIGN formula IN formula END (AST.LetExp( (AST.VarExp ID), formula1, formula2, (#1 LET, #2 END) ))
-            |   lambda (lambda)
-            |   LPAREN formula formula RPAREN (AST.AppExp(formula1, formula2, (#1 LPAREN, #2 RPAREN)) )
+propList:
+        prop propList                   (prop::propList)
+    |   prop                            ([prop])
 
-            |   LPAREN formula RPAREN (formula1)
+prop:
+        iff_expr PERIOD                 (iff_expr)
 
-            |   formula IMPLIES formula (AST.BinExp(AST.Implies(IMPLIES), formula1, formula2))
-            |   formula AND formula (AST.BinExp(AST.And(AND), formula1, formula2))
-            |   formula OR formula (AST.BinExp(AST.Or(OR), formula1, formula2))
-            |   formula XOR formula (AST.BinExp(AST.Xor(XOR), formula1, formula2))
-            |   formula EQUALS formula (AST.BinExp(AST.Equals(EQUALS), formula1, formula2))
+iff_expr:
+        if_expr IFF iff_expr            (AST.BIC(if_expr, iff_expr))
+    |   if_expr                         (if_expr)
 
-            |   formula PLUS formula (AST.BinExp(AST.Plus(PLUS), formula1, formula2))
-            |   formula MINUS formula (AST.BinExp(AST.Minus(MINUS), formula1, formula2))
-            |   formula TIMES formula (AST.BinExp(AST.Times(TIMES), formula1, formula2))
+if_expr:
+        IF or_expr THEN if_expr                 (AST.COND(or_expr, if_expr))
+    |   if_expr IF or_expr                      (AST.COND(or_expr, if_expr))
+    |   IF or_expr THEN if_expr ELSE if_expr    (AST.ITE(or_expr, if_expr1, if_expr2))
+    |   or_expr                                 (or_expr)
 
-            |   formula GREATERTHAN formula (AST.BinExp(AST.GreaterThan(GREATERTHAN), formula1, formula2))
-            |   formula LESSTHAN formula (AST.BinExp(AST.LessThan(LESSTHAN), formula1, formula2))
+or_expr:
+        or_expr OR and_expr             (AST.OR(or_expr, and_expr))
+    |   and_expr                        (and_expr)
 
-			      |	  NEGATE formula (AST.UnaryExp(AST.Negate(NEGATE), formula, #1 NEGATE))            
-            |   NOT formula (AST.UnaryExp( AST.Not(NOT), formula, #1 NOT))
-            |   ID (AST.VarExp(ID))
-            |   BOOLCONST (AST.BoolExp(BOOLCONST))
-            |   INTCONST (AST.NumExp(INTCONST))
+and_expr:
+        and_expr AND not_expr           (AST.AND(and_expr, not_expr))
+    |   not_expr                        (not_expr)
+
+not_expr:
+        NOT not_expr                    (AST.NOT(not_expr))
+    |   parentheses                     (parentheses)
+
+parentheses:
+        LPAREN iff_expr RPAREN          (iff_expr)
+    |   atomic_expression               (atomic_expression)
+
+atomic_expression:
+        DQ atomic_list DQ               (AST.ATOM(atomic_list))
+    |   DQ DQ                           (AST.ATOM(""))
+
+atomic_list:
+        ATOM atomic_list                (ATOM ^ " " ^ atomic_list)
+    |   ATOM                            (ATOM)
