@@ -16,18 +16,18 @@ struct
     
     ==================EBNF========================
 
-    main -> [propList] therefore_stmnt
-    therefore_stmnt -> THEREFORE prop
-    propList -> prop [propList]
-    prop -> iff_expression PERIOD
-    iff_expression -> if_expression [IFF iff_expression]
-    if_expression -> IF or_expression THEN if_expresssion [ELSE if_expression]  | [if_expression IF] or_expression
-    or_expression -> [or_expression OR] and_expression
-    and_expression -> [and_expression AND] not_expression
-    not_expression -> NOT not_expression | parantheses
-    parantheses -> LPAREN iff_expression RPAREN | atomic_expression
-    atomic_expression -> DQ [atomic_list] DQ
-    atomic_list -> ATOM [atomic_list]
+    main ::= [propList] therefore_stmnt
+    therefore_stmnt ::= THEREFORE prop
+    propList ::= prop [propList]
+    prop ::= iff_expression PERIOD
+    iff_expression ::= if_expression [IFF iff_expression]
+    if_expression ::= IF or_expression THEN if_expresssion [ELSE if_expression]  | [if_expression IF] or_expression
+    or_expression ::= [or_expression OR] and_expression
+    and_expression ::= [and_expression AND] not_expression
+    not_expression ::= NOT not_expression | parantheses
+    parantheses ::= LPAREN iff_expression RPAREN | atomic_expression
+    atomic_expression ::= DQ [atomic_list] DQ
+    atomic_list ::= ATOM [atomic_list]
 *)
 
 
