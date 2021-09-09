@@ -1,13 +1,13 @@
-structure FlaslLex=
+functor FlaslLexFun(structure Tokens: flasl_TOKENS)=
    struct
     structure UserDeclarations =
       struct
 
+structure Tokens = Tokens
 
-datatype lexresult= IF | THEN | ELSE | AND | OR | NOT | IFF | THEREFORE | ATOM of string | SPACE | PERIOD | COMMA | LPAREN | RPAREN | EOF
 fun error (x) = TextIO.output(TextIO.stdOut, x^"\n")
 fun init () = ()
-fun eof () = EOF
+fun eof () = Tokens.EOF
 
 val line = ref 1
 val column = ref 1
@@ -34,9 +34,9 @@ val s = [
 \\000"
 ),
  (1, 
-"\003\003\003\003\003\003\003\003\003\035\038\003\003\037\003\003\
+"\003\003\003\003\003\003\003\003\003\036\039\003\003\038\003\003\
 \\003\003\003\003\003\003\003\003\003\003\003\003\003\003\003\003\
-\\035\004\003\004\004\004\004\004\034\033\004\004\032\004\031\004\
+\\036\004\035\004\004\004\004\004\034\033\004\004\032\004\031\004\
 \\004\004\004\004\004\004\004\004\004\004\004\004\004\004\004\004\
 \\004\028\004\004\004\024\004\004\004\021\004\004\004\004\018\016\
 \\004\004\004\004\006\004\004\004\004\004\004\004\004\004\004\004\
@@ -253,10 +253,10 @@ val s = [
 \\005\005\005\005\005\005\005\005\005\005\005\005\005\005\005\000\
 \\000"
 ),
- (35, 
-"\000\000\000\000\000\000\000\000\000\036\000\000\000\000\000\000\
+ (36, 
+"\000\000\000\000\000\000\000\000\000\037\000\000\000\000\000\000\
 \\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
-\\036\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
+\\037\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
 \\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
 \\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
 \\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
@@ -264,8 +264,8 @@ val s = [
 \\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
 \\000"
 ),
- (37, 
-"\000\000\000\000\000\000\000\000\000\000\038\000\000\000\000\000\
+ (38, 
+"\000\000\000\000\000\000\000\000\000\000\039\000\000\000\000\000\
 \\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
 \\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
 \\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
@@ -286,41 +286,42 @@ in Vector.fromList(List.map g
 [{fin = [], trans = 0},
 {fin = [], trans = 1},
 {fin = [], trans = 1},
-{fin = [(N 63)], trans = 0},
-{fin = [(N 61),(N 63)], trans = 4},
-{fin = [(N 61)], trans = 4},
-{fin = [(N 61),(N 63)], trans = 6},
-{fin = [(N 61)], trans = 7},
-{fin = [(N 61)], trans = 8},
-{fin = [(N 61)], trans = 9},
-{fin = [(N 61)], trans = 10},
-{fin = [(N 61)], trans = 11},
-{fin = [(N 61)], trans = 12},
-{fin = [(N 61)], trans = 13},
-{fin = [(N 52),(N 61)], trans = 4},
-{fin = [(N 22),(N 61)], trans = 4},
-{fin = [(N 61),(N 63)], trans = 16},
-{fin = [(N 34),(N 61)], trans = 4},
-{fin = [(N 61),(N 63)], trans = 18},
-{fin = [(N 61)], trans = 19},
-{fin = [(N 38),(N 61)], trans = 4},
-{fin = [(N 61),(N 63)], trans = 21},
-{fin = [(N 17),(N 61)], trans = 22},
-{fin = [(N 42),(N 61)], trans = 4},
-{fin = [(N 61),(N 63)], trans = 24},
-{fin = [(N 61)], trans = 25},
-{fin = [(N 61)], trans = 26},
-{fin = [(N 27),(N 61)], trans = 4},
-{fin = [(N 61),(N 63)], trans = 28},
-{fin = [(N 61)], trans = 29},
-{fin = [(N 31),(N 61)], trans = 4},
-{fin = [(N 8),(N 63)], trans = 0},
-{fin = [(N 10),(N 63)], trans = 0},
-{fin = [(N 14),(N 63)], trans = 0},
-{fin = [(N 12),(N 63)], trans = 0},
-{fin = [(N 6),(N 63)], trans = 35},
-{fin = [(N 6)], trans = 35},
-{fin = [(N 63)], trans = 37},
+{fin = [(N 65)], trans = 0},
+{fin = [(N 63),(N 65)], trans = 4},
+{fin = [(N 63)], trans = 4},
+{fin = [(N 63),(N 65)], trans = 6},
+{fin = [(N 63)], trans = 7},
+{fin = [(N 63)], trans = 8},
+{fin = [(N 63)], trans = 9},
+{fin = [(N 63)], trans = 10},
+{fin = [(N 63)], trans = 11},
+{fin = [(N 63)], trans = 12},
+{fin = [(N 63)], trans = 13},
+{fin = [(N 54),(N 63)], trans = 4},
+{fin = [(N 24),(N 63)], trans = 4},
+{fin = [(N 63),(N 65)], trans = 16},
+{fin = [(N 36),(N 63)], trans = 4},
+{fin = [(N 63),(N 65)], trans = 18},
+{fin = [(N 63)], trans = 19},
+{fin = [(N 40),(N 63)], trans = 4},
+{fin = [(N 63),(N 65)], trans = 21},
+{fin = [(N 19),(N 63)], trans = 22},
+{fin = [(N 44),(N 63)], trans = 4},
+{fin = [(N 63),(N 65)], trans = 24},
+{fin = [(N 63)], trans = 25},
+{fin = [(N 63)], trans = 26},
+{fin = [(N 29),(N 63)], trans = 4},
+{fin = [(N 63),(N 65)], trans = 28},
+{fin = [(N 63)], trans = 29},
+{fin = [(N 33),(N 63)], trans = 4},
+{fin = [(N 8),(N 65)], trans = 0},
+{fin = [(N 10),(N 65)], trans = 0},
+{fin = [(N 16),(N 65)], trans = 0},
+{fin = [(N 14),(N 65)], trans = 0},
+{fin = [(N 12),(N 65)], trans = 0},
+{fin = [(N 6),(N 65)], trans = 36},
+{fin = [(N 6)], trans = 36},
+{fin = [(N 65)], trans = 38},
 {fin = [(N 3)], trans = 0}])
 end
 structure StartStates =
@@ -363,22 +364,23 @@ let fun continue() = lex() in
 
 			(* Application actions *)
 
-  10 => let val yytext=yymktext() in column := (!column) + (size yytext); COMMA end
-| 12 => let val yytext=yymktext() in column := (!column) + (size yytext); LPAREN end
-| 14 => let val yytext=yymktext() in column := (!column) + (size yytext); RPAREN end
-| 17 => let val yytext=yymktext() in column := (!column) + (size yytext); IF end
-| 22 => let val yytext=yymktext() in column := (!column) + (size yytext); THEN end
-| 27 => let val yytext=yymktext() in column := (!column) + (size yytext); ELSE end
+  10 => let val yytext=yymktext() in column := (!column) + (size yytext); Tokens.COMMA end
+| 12 => let val yytext=yymktext() in column := (!column) + (size yytext); Tokens.DQ end
+| 14 => let val yytext=yymktext() in column := (!column) + (size yytext); Tokens.LPAREN end
+| 16 => let val yytext=yymktext() in column := (!column) + (size yytext); Tokens.RPAREN end
+| 19 => let val yytext=yymktext() in column := (!column) + (size yytext); Tokens.IF end
+| 24 => let val yytext=yymktext() in column := (!column) + (size yytext); Tokens.THEN end
+| 29 => let val yytext=yymktext() in column := (!column) + (size yytext); Tokens.ELSE end
 | 3 => (line := (!line) + 1; column := 1; lex())
-| 31 => let val yytext=yymktext() in column := (!column) + (size yytext); AND end
-| 34 => let val yytext=yymktext() in column := (!column) + (size yytext); OR end
-| 38 => let val yytext=yymktext() in column := (!column) + (size yytext); NOT end
-| 42 => let val yytext=yymktext() in column := (!column) + (size yytext); IFF end
-| 52 => let val yytext=yymktext() in column := (!column) + (size yytext); THEREFORE end
-| 6 => let val yytext=yymktext() in column := (!column) + (size yytext); SPACE end
-| 61 => let val yytext=yymktext() in column := (!column) + (size yytext); ATOM yytext end
-| 63 => let val yytext=yymktext() in error ("ScanError. Line: " ^ (Int.toString(!line)) ^ ", Column:" ^(Int.toString(!column))^". Error Character:'"^yytext^"'."); column := (!column) + (size yytext); lex() end
-| 8 => let val yytext=yymktext() in column := (!column) + (size yytext); PERIOD end
+| 33 => let val yytext=yymktext() in column := (!column) + (size yytext); Tokens.AND end
+| 36 => let val yytext=yymktext() in column := (!column) + (size yytext); Tokens.OR end
+| 40 => let val yytext=yymktext() in column := (!column) + (size yytext); Tokens.NOT end
+| 44 => let val yytext=yymktext() in column := (!column) + (size yytext); Tokens.IFF end
+| 54 => let val yytext=yymktext() in column := (!column) + (size yytext); Tokens.THEREFORE end
+| 6 => let val yytext=yymktext() in column := (!column) + (size yytext); lex() end
+| 63 => let val yytext=yymktext() in column := (!column) + (size yytext); Tokens.ATOM yytext end
+| 65 => let val yytext=yymktext() in error ("ScanError. Line: " ^ (Int.toString(!line)) ^ ", Column:" ^(Int.toString(!column))^". Error Character:'"^yytext^"'."); column := (!column) + (size yytext); raise ScanError; lex() end
+| 8 => let val yytext=yymktext() in column := (!column) + (size yytext); Tokens.PERIOD end
 | _ => raise Internal.LexerError
 
 		) end )
