@@ -7,7 +7,6 @@ val EOF:  'a * 'a -> (svalue,'a) token
 val DQ:  'a * 'a -> (svalue,'a) token
 val RPAREN:  'a * 'a -> (svalue,'a) token
 val LPAREN:  'a * 'a -> (svalue,'a) token
-val COMMA:  'a * 'a -> (svalue,'a) token
 val PERIOD:  'a * 'a -> (svalue,'a) token
 val THEREFORE:  'a * 'a -> (svalue,'a) token
 val IFF:  'a * 'a -> (svalue,'a) token

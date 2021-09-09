@@ -37,22 +37,22 @@ structure Token = Token
 local open LrTable in 
 val table=let val actionRows =
 "\
-\\001\000\001\000\017\000\006\000\016\000\008\000\015\000\011\000\014\000\
-\\013\000\013\000\000\000\
-\\001\000\001\000\017\000\006\000\016\000\011\000\014\000\013\000\013\000\000\000\
+\\001\000\001\000\017\000\006\000\016\000\008\000\015\000\010\000\014\000\
+\\012\000\013\000\000\000\
+\\001\000\001\000\017\000\006\000\016\000\010\000\014\000\012\000\013\000\000\000\
 \\001\000\002\000\039\000\005\000\019\000\000\000\
-\\001\000\006\000\016\000\011\000\014\000\013\000\013\000\000\000\
+\\001\000\006\000\016\000\010\000\014\000\012\000\013\000\000\000\
 \\001\000\008\000\015\000\000\000\
 \\001\000\009\000\022\000\000\000\
-\\001\000\012\000\038\000\000\000\
-\\001\000\013\000\027\000\015\000\026\000\000\000\
-\\001\000\013\000\036\000\000\000\
-\\001\000\014\000\000\000\000\000\
+\\001\000\011\000\038\000\000\000\
+\\001\000\012\000\027\000\014\000\026\000\000\000\
+\\001\000\012\000\036\000\000\000\
+\\001\000\013\000\000\000\000\000\
 \\044\000\000\000\
 \\045\000\000\000\
 \\046\000\000\000\
 \\047\000\000\000\
-\\048\000\001\000\017\000\006\000\016\000\011\000\014\000\013\000\013\000\000\000\
+\\048\000\001\000\017\000\006\000\016\000\010\000\014\000\012\000\013\000\000\000\
 \\049\000\000\000\
 \\050\000\000\000\
 \\051\000\001\000\021\000\007\000\020\000\000\000\
@@ -71,7 +71,7 @@ val table=let val actionRows =
 \\064\000\000\000\
 \\065\000\000\000\
 \\066\000\000\000\
-\\067\000\015\000\026\000\000\000\
+\\067\000\014\000\026\000\000\000\
 \"
 val actionRowNumbers =
 "\000\000\029\000\027\000\025\000\
@@ -228,7 +228,7 @@ fn _ => false
 val preferred_change : (term list * term list) list = 
 nil
 val noShift = 
-fn (T 13) => true | _ => false
+fn (T 12) => true | _ => false
 val showTerminal =
 fn (T 0) => "IF"
   | (T 1) => "THEN"
@@ -239,20 +239,19 @@ fn (T 0) => "IF"
   | (T 6) => "IFF"
   | (T 7) => "THEREFORE"
   | (T 8) => "PERIOD"
-  | (T 9) => "COMMA"
-  | (T 10) => "LPAREN"
-  | (T 11) => "RPAREN"
-  | (T 12) => "DQ"
-  | (T 13) => "EOF"
-  | (T 14) => "ATOM"
+  | (T 9) => "LPAREN"
+  | (T 10) => "RPAREN"
+  | (T 11) => "DQ"
+  | (T 12) => "EOF"
+  | (T 13) => "ATOM"
   | _ => "bogus-term"
 local open Header in
 val errtermvalue=
 fn _ => MlyValue.VOID
 end
 val terms : term list = nil
- $$ (T 13) $$ (T 12) $$ (T 11) $$ (T 10) $$ (T 9) $$ (T 8) $$ (T 7)
- $$ (T 6) $$ (T 5) $$ (T 4) $$ (T 3) $$ (T 2) $$ (T 1) $$ (T 0)end
+ $$ (T 12) $$ (T 11) $$ (T 10) $$ (T 9) $$ (T 8) $$ (T 7) $$ (T 6) $$ 
+(T 5) $$ (T 4) $$ (T 3) $$ (T 2) $$ (T 1) $$ (T 0)end
 structure Actions =
 struct 
 exception mlyAction of int
@@ -498,17 +497,15 @@ fun THEREFORE (p1,p2) = Token.TOKEN (ParserData.LrTable.T 7,(
 ParserData.MlyValue.VOID,p1,p2))
 fun PERIOD (p1,p2) = Token.TOKEN (ParserData.LrTable.T 8,(
 ParserData.MlyValue.VOID,p1,p2))
-fun COMMA (p1,p2) = Token.TOKEN (ParserData.LrTable.T 9,(
+fun LPAREN (p1,p2) = Token.TOKEN (ParserData.LrTable.T 9,(
 ParserData.MlyValue.VOID,p1,p2))
-fun LPAREN (p1,p2) = Token.TOKEN (ParserData.LrTable.T 10,(
+fun RPAREN (p1,p2) = Token.TOKEN (ParserData.LrTable.T 10,(
 ParserData.MlyValue.VOID,p1,p2))
-fun RPAREN (p1,p2) = Token.TOKEN (ParserData.LrTable.T 11,(
+fun DQ (p1,p2) = Token.TOKEN (ParserData.LrTable.T 11,(
 ParserData.MlyValue.VOID,p1,p2))
-fun DQ (p1,p2) = Token.TOKEN (ParserData.LrTable.T 12,(
+fun EOF (p1,p2) = Token.TOKEN (ParserData.LrTable.T 12,(
 ParserData.MlyValue.VOID,p1,p2))
-fun EOF (p1,p2) = Token.TOKEN (ParserData.LrTable.T 13,(
-ParserData.MlyValue.VOID,p1,p2))
-fun ATOM (i,p1,p2) = Token.TOKEN (ParserData.LrTable.T 14,(
+fun ATOM (i,p1,p2) = Token.TOKEN (ParserData.LrTable.T 13,(
 ParserData.MlyValue.ATOM (fn () => i),p1,p2))
 end
 end

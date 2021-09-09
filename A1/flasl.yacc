@@ -24,7 +24,7 @@
 
 %name flasl
 
-%term IF | THEN | ELSE | AND | OR | NOT | IFF | THEREFORE | PERIOD | COMMA | LPAREN | RPAREN | DQ | EOF | ATOM of string
+%term IF | THEN | ELSE | AND | OR | NOT | IFF | THEREFORE | PERIOD | LPAREN | RPAREN | DQ | EOF | ATOM of string
 
 %left AND OR
 %right IF THEN ELSE IFF
