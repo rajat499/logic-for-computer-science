@@ -1,0 +1,536 @@
+
+state 0:
+
+	main : . propList therefore_stmnt 
+	main : . therefore_stmnt 
+
+	IF	shift 15
+	NOT	shift 14
+	THEREFORE	shift 13
+	LPAREN	shift 12
+	DQ	shift 11
+
+	main	goto 41
+	therefore_stmnt	goto 10
+	propList	goto 9
+	prop	goto 8
+	iff_expr	goto 7
+	if_expr	goto 6
+	or_expr	goto 5
+	and_expr	goto 4
+	not_expr	goto 3
+	parentheses	goto 2
+	atomic_expression	goto 1
+
+	.	error
+
+
+state 1:
+
+	parentheses : atomic_expression .  (reduce by rule 19)
+
+
+
+	.	reduce by rule 19
+
+
+state 2:
+
+	not_expr : parentheses .  (reduce by rule 17)
+
+
+
+	.	reduce by rule 17
+
+
+state 3:
+
+	and_expr : not_expr .  (reduce by rule 15)
+
+
+
+	.	reduce by rule 15
+
+
+state 4:
+
+	or_expr : and_expr .  (reduce by rule 13)
+	and_expr : and_expr . AND not_expr 
+
+	AND	shift 16
+
+
+	.	reduce by rule 13
+
+
+state 5:
+
+	if_expr : or_expr .  (reduce by rule 11)
+	or_expr : or_expr . OR and_expr 
+
+	OR	shift 17
+
+
+	.	reduce by rule 11
+
+
+state 6:
+
+	iff_expr : if_expr . IFF iff_expr 
+	iff_expr : if_expr .  (reduce by rule 7)
+	if_expr : if_expr . IF or_expr 
+
+	IF	shift 19
+	IFF	shift 18
+
+
+	.	reduce by rule 7
+
+
+state 7:
+
+	prop : iff_expr . PERIOD 
+
+	PERIOD	shift 20
+
+
+	.	error
+
+
+state 8:
+
+	propList : prop . propList 
+	propList : prop .  (reduce by rule 4)
+
+	IF	shift 15
+	NOT	shift 14
+	LPAREN	shift 12
+	DQ	shift 11
+
+	propList	goto 21
+	prop	goto 8
+	iff_expr	goto 7
+	if_expr	goto 6
+	or_expr	goto 5
+	and_expr	goto 4
+	not_expr	goto 3
+	parentheses	goto 2
+	atomic_expression	goto 1
+
+	.	reduce by rule 4
+
+
+state 9:
+
+	main : propList . therefore_stmnt 
+
+	THEREFORE	shift 13
+
+	therefore_stmnt	goto 22
+
+	.	error
+
+
+state 10:
+
+	main : therefore_stmnt .  (reduce by rule 1)
+
+
+
+	.	reduce by rule 1
+
+
+state 11:
+
+	atomic_expression : DQ . atomic_list DQ 
+	atomic_expression : DQ . DQ 
+
+	DQ	shift 25
+	ATOM	shift 24
+
+	atomic_list	goto 23
+
+	.	error
+
+
+state 12:
+
+	parentheses : LPAREN . iff_expr RPAREN 
+
+	IF	shift 15
+	NOT	shift 14
+	LPAREN	shift 12
+	DQ	shift 11
+
+	iff_expr	goto 26
+	if_expr	goto 6
+	or_expr	goto 5
+	and_expr	goto 4
+	not_expr	goto 3
+	parentheses	goto 2
+	atomic_expression	goto 1
+
+	.	error
+
+
+state 13:
+
+	therefore_stmnt : THEREFORE . prop 
+
+	IF	shift 15
+	NOT	shift 14
+	LPAREN	shift 12
+	DQ	shift 11
+
+	prop	goto 27
+	iff_expr	goto 7
+	if_expr	goto 6
+	or_expr	goto 5
+	and_expr	goto 4
+	not_expr	goto 3
+	parentheses	goto 2
+	atomic_expression	goto 1
+
+	.	error
+
+
+state 14:
+
+	not_expr : NOT . not_expr 
+
+	NOT	shift 14
+	LPAREN	shift 12
+	DQ	shift 11
+
+	not_expr	goto 28
+	parentheses	goto 2
+	atomic_expression	goto 1
+
+	.	error
+
+
+state 15:
+
+	if_expr : IF . or_expr THEN if_expr 
+	if_expr : IF . or_expr THEN if_expr ELSE if_expr 
+
+	NOT	shift 14
+	LPAREN	shift 12
+	DQ	shift 11
+
+	or_expr	goto 29
+	and_expr	goto 4
+	not_expr	goto 3
+	parentheses	goto 2
+	atomic_expression	goto 1
+
+	.	error
+
+
+state 16:
+
+	and_expr : and_expr AND . not_expr 
+
+	NOT	shift 14
+	LPAREN	shift 12
+	DQ	shift 11
+
+	not_expr	goto 30
+	parentheses	goto 2
+	atomic_expression	goto 1
+
+	.	error
+
+
+state 17:
+
+	or_expr : or_expr OR . and_expr 
+
+	NOT	shift 14
+	LPAREN	shift 12
+	DQ	shift 11
+
+	and_expr	goto 31
+	not_expr	goto 3
+	parentheses	goto 2
+	atomic_expression	goto 1
+
+	.	error
+
+
+state 18:
+
+	iff_expr : if_expr IFF . iff_expr 
+
+	IF	shift 15
+	NOT	shift 14
+	LPAREN	shift 12
+	DQ	shift 11
+
+	iff_expr	goto 32
+	if_expr	goto 6
+	or_expr	goto 5
+	and_expr	goto 4
+	not_expr	goto 3
+	parentheses	goto 2
+	atomic_expression	goto 1
+
+	.	error
+
+
+state 19:
+
+	if_expr : if_expr IF . or_expr 
+
+	NOT	shift 14
+	LPAREN	shift 12
+	DQ	shift 11
+
+	or_expr	goto 33
+	and_expr	goto 4
+	not_expr	goto 3
+	parentheses	goto 2
+	atomic_expression	goto 1
+
+	.	error
+
+
+state 20:
+
+	prop : iff_expr PERIOD .  (reduce by rule 5)
+
+
+
+	.	reduce by rule 5
+
+
+state 21:
+
+	propList : prop propList .  (reduce by rule 3)
+
+
+
+	.	reduce by rule 3
+
+
+state 22:
+
+	main : propList therefore_stmnt .  (reduce by rule 0)
+
+
+
+	.	reduce by rule 0
+
+
+state 23:
+
+	atomic_expression : DQ atomic_list . DQ 
+
+	DQ	shift 34
+
+
+	.	error
+
+
+state 24:
+
+	atomic_list : ATOM . atomic_list 
+	atomic_list : ATOM .  (reduce by rule 23)
+
+	ATOM	shift 24
+
+	atomic_list	goto 35
+
+	.	reduce by rule 23
+
+
+state 25:
+
+	atomic_expression : DQ DQ .  (reduce by rule 21)
+
+
+
+	.	reduce by rule 21
+
+
+state 26:
+
+	parentheses : LPAREN iff_expr . RPAREN 
+
+	RPAREN	shift 36
+
+
+	.	error
+
+
+state 27:
+
+	therefore_stmnt : THEREFORE prop .  (reduce by rule 2)
+
+
+
+	.	reduce by rule 2
+
+
+state 28:
+
+	not_expr : NOT not_expr .  (reduce by rule 16)
+
+
+
+	.	reduce by rule 16
+
+
+state 29:
+
+	if_expr : IF or_expr . THEN if_expr 
+	if_expr : IF or_expr . THEN if_expr ELSE if_expr 
+	or_expr : or_expr . OR and_expr 
+
+	THEN	shift 37
+	OR	shift 17
+
+
+	.	error
+
+
+state 30:
+
+	and_expr : and_expr AND not_expr .  (reduce by rule 14)
+
+
+
+	.	reduce by rule 14
+
+
+state 31:
+
+	or_expr : or_expr OR and_expr .  (reduce by rule 12)
+	and_expr : and_expr . AND not_expr 
+
+	AND	shift 16
+
+
+	.	reduce by rule 12
+
+
+state 32:
+
+	iff_expr : if_expr IFF iff_expr .  (reduce by rule 6)
+
+
+
+	.	reduce by rule 6
+
+
+state 33:
+
+	if_expr : if_expr IF or_expr .  (reduce by rule 9)
+	or_expr : or_expr . OR and_expr 
+
+	OR	shift 17
+
+
+	.	reduce by rule 9
+
+
+state 34:
+
+	atomic_expression : DQ atomic_list DQ .  (reduce by rule 20)
+
+
+
+	.	reduce by rule 20
+
+
+state 35:
+
+	atomic_list : ATOM atomic_list .  (reduce by rule 22)
+
+
+
+	.	reduce by rule 22
+
+
+state 36:
+
+	parentheses : LPAREN iff_expr RPAREN .  (reduce by rule 18)
+
+
+
+	.	reduce by rule 18
+
+
+state 37:
+
+	if_expr : IF or_expr THEN . if_expr 
+	if_expr : IF or_expr THEN . if_expr ELSE if_expr 
+
+	IF	shift 15
+	NOT	shift 14
+	LPAREN	shift 12
+	DQ	shift 11
+
+	if_expr	goto 38
+	or_expr	goto 5
+	and_expr	goto 4
+	not_expr	goto 3
+	parentheses	goto 2
+	atomic_expression	goto 1
+
+	.	error
+
+
+state 38:
+
+	if_expr : IF or_expr THEN if_expr .  (reduce by rule 8)
+	if_expr : if_expr . IF or_expr 
+	if_expr : IF or_expr THEN if_expr . ELSE if_expr 
+
+	IF	shift 19
+	ELSE	shift 39
+
+
+	.	reduce by rule 8
+
+
+state 39:
+
+	if_expr : IF or_expr THEN if_expr ELSE . if_expr 
+
+	IF	shift 15
+	NOT	shift 14
+	LPAREN	shift 12
+	DQ	shift 11
+
+	if_expr	goto 40
+	or_expr	goto 5
+	and_expr	goto 4
+	not_expr	goto 3
+	parentheses	goto 2
+	atomic_expression	goto 1
+
+	.	error
+
+
+state 40:
+
+	if_expr : if_expr . IF or_expr 
+	if_expr : IF or_expr THEN if_expr ELSE if_expr .  (reduce by rule 10)
+
+	IF	shift 19
+
+
+	.	reduce by rule 10
+
+
+state 41:
+
+
+	EOF	accept
+
+
+	.	error
+
+35 of 105 action table entries left after compaction
+77 goto table entries
