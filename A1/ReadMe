@@ -1,2 +1,0 @@
-Build using: `make`
-Run using: `sml ast2flasl.sml arg-inp.flasl arg-out.flasl`
