@@ -27,16 +27,17 @@ struct
     |   propToTree (NOT(p))           = ("NOT (" ^ propToTree(p) ^")")
     |   propToTree (AND(p1,p2))       = ("AND (" ^ propToTree(p1) ^" , " ^ propToTree(p2) ^ ")")
     |   propToTree (OR(p1,p2))        = ("OR (" ^ propToTree(p1) ^" , " ^ propToTree(p2) ^ ")")
-    |   propToTree (COND(p1,p2))      = ("IF (" ^ propToTree(p1) ^" , " ^ propToTree(p2) ^ ")")
-    |   propToTree (BIC(p1,p2))       = ("IFF (" ^ propToTree(p1) ^" , " ^ propToTree(p2) ^ ")")
-    |   propToTree (ITE(p1,p2,p3))    = ("IFTHENELSE (" ^ propToTree(p1) ^" , " ^ propToTree(p2) ^ " , " ^ propToTree(p3) ^ ")")
+    |   propToTree (COND(p1,p2))      = ("COND (" ^ propToTree(p1) ^" , " ^ propToTree(p2) ^ ")")
+    |   propToTree (BIC(p1,p2))       = ("BIC (" ^ propToTree(p1) ^" , " ^ propToTree(p2) ^ ")")
+    |   propToTree (ITE(p1,p2,p3))    = ("ITE (" ^ propToTree(p1) ^" , " ^ propToTree(p2) ^ " , " ^ propToTree(p3) ^ ")")
 
     fun listToTree []           = ""
+    |   listToTree (x::[])      = (propToTree(x))
     |   listToTree (x::xs)      =  (propToTree(x) ^ ", \n" ^ (listToTree(xs)))
     
 
-    fun ast2tree (HENCE([], p)) =  ("HENCE([], " ^ propToTree(p) ^")")
-    |   ast2tree (HENCE(l, p))  =  ("HENCE([" ^ listToTree(l) ^ "], " ^ propToTree(p) ^")")
+    fun ast2tree (HENCE([], p)) =  ("val ast1 = HENCE([], " ^ propToTree(p) ^");")
+    |   ast2tree (HENCE(l, p))  =  ("val ast1 = HENCE([" ^ listToTree(l) ^ "], " ^ propToTree(p) ^");")
  
 end ;
 
