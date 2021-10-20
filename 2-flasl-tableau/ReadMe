@@ -1,2 +1,0 @@
-Build using: `make`
-Run using: `sml proptableau.sml arg-inp.flasl`
