@@ -77,8 +77,17 @@ fun literal2Str (AST.ATOM(s))             = ("\"" ^ s ^ "\"")
 fun cleanedBranch2Str (x::[])   =   (literal2Str x) ^ ".\n"
 |   cleanedBranch2Str (x::xs)   =   (literal2Str x) ^ " , " ^ (cleanedBranch2Str xs)
 
+fun removeDuplicates [] = []
+|   removeDuplicates (x::xs) = let
+                                    fun remove x [] = []
+                                    |   remove x (y::ys) = if (x=y) then (remove x ys) else (y::(remove x ys))
+                                in
+                                    (x::(removeDuplicates(remove x xs)))
+                                end
+
 fun falsifyingBranches2Str [] n         =   ""
-|   falsifyingBranches2Str (x::xs) n    =   (Int.toString (n+1)) ^ ". " ^ (cleanedBranch2Str x) ^ (falsifyingBranches2Str xs (n+1))
+|   falsifyingBranches2Str (x::xs) n    =   (Int.toString (n+1)) ^ ". " ^ (cleanedBranch2Str (removeDuplicates x)) ^ (falsifyingBranches2Str xs (n+1))
+
 
 fun checkASTvalidity(ast_input) =   let
                                         val falsifyingBranches = ast2FalsifyingBranches(ast_input)
