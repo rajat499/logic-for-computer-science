@@ -84,7 +84,7 @@ fun checkASTvalidity(ast_input) =   let
                                         val falsifyingBranches = ast2FalsifyingBranches(ast_input)
                                     in
                                         if (List.length falsifyingBranches) > 0
-                                        then (cleanedBranch2Str (List.hd falsifyingBranches))
+                                        then (falsifyingBranches2Str falsifyingBranches 0)
                                         else "The Argument is valid. \n"
                                     end
 
