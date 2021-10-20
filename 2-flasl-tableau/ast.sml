@@ -38,10 +38,22 @@ struct
 
     fun ast2tree (HENCE([], p)) =  ("val ast1 = HENCE([], " ^ propToTree(p) ^");")
     |   ast2tree (HENCE(l, p))  =  ("val ast1 = HENCE([" ^ listToTree(l) ^ "], " ^ propToTree(p) ^");")
+
+    fun list2Conjuction (x::[])      =  x
+    |   list2Conjuction (x::xs)      = AND(x, list2Conjuction(xs))
+
+    fun ast2PropNegated (HENCE([], p))  = NOT(p)
+    |   ast2PropNegated (HENCE(l, p))   = AND(list2Conjuction(l), NOT(p))
+
+    fun convertITE  ATOM(s)             = ATOM(s)
+    |   convertITE  (NOT(p))            = NOT(convertITE p)
+    |   convertITE  (AND(p1, p2))       = AND(convertITE p1, convertITE p2)
+    |   convertITE  (OR(p1, p2))        = OR(convertITE p1, convertITE p2)
+    |   convertITE  (COND(p1, p2))      = COND(convertITE p1, convertITE p2)
+    |   convertITE  (BIC(p1, p2))       = BIC(convertITE p1, convertITE p2)
+    |   convertITE  (ITE(p1, p2, p3))   = (let (val temp = convertITE p1) in OR(AND(temp, convertITE p2), AND(NOT(temp), convertITE p3)) end);
  
 end ;
 
 exception ScanError;
 exception ParseError;
-
-(*AST.argToFile(AST.HENCE([AST.COND(AST.ATOM("a"),AST.ATOM("b"))], AST.ATOM("None")));*)

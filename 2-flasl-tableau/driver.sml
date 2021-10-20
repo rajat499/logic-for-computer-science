@@ -50,3 +50,8 @@ struct
     fun parser (filename) = lexerToParser(stringToLexer(readFile filename))
     val parseString = lexerToParser o stringToLexer
 end
+
+fun printToFile(string_to_print, filename) = 
+    let val file = TextIO.openOut filename
+    in (TextIO.output (file, string_to_print); TextIO.closeOut file)
+    end
