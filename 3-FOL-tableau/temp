@@ -1,0 +1,30 @@
+Branch#0
+
+((p(FUN f(FUN f(CONST(c))))) && (forall[VAR(x)]((p(VAR(x))) || (~(p(FUN f(VAR(x)))))))) && (~(p(CONST(c))))
+(p(FUN f(FUN f(CONST(c))))) && (forall[VAR(x)]((p(VAR(x))) || (~(p(FUN f(VAR(x)))))))
+~(p(CONST(c)))
+p(FUN f(FUN f(CONST(c))))
+(p(VAR(0))) || (~(p(FUN f(VAR(0)))))
+forall[VAR(x)]((p(VAR(x))) || (~(p(FUN f(VAR(x))))))
+p(VAR(0))
+
+Contradiction with Branch
+
+replace VAR(0) with CONST(c)
+
+
+Branch#1
+
+((p(FUN f(FUN f(CONST(c))))) && (forall[VAR(x)]((p(VAR(x))) || (~(p(FUN f(VAR(x)))))))) && (~(p(CONST(c))))
+(p(FUN f(FUN f(CONST(c))))) && (forall[VAR(x)]((p(VAR(x))) || (~(p(FUN f(VAR(x)))))))
+~(p(CONST(c)))
+p(FUN f(FUN f(CONST(c))))
+(p(VAR(0))) || (~(p(FUN f(VAR(0)))))
+forall[VAR(x)]((p(VAR(x))) || (~(p(FUN f(VAR(x))))))
+~(p(FUN f(VAR(0))))
+
+Contradiction with Branch
+
+replace VAR(0) with FUN f(CONST(c))
+
+

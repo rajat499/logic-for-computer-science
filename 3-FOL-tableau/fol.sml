@@ -18,6 +18,39 @@ struct
     datatype Argument = HENCE  of Pred list * Pred
 
 
+    fun term2Str (VAR(s)) = "VAR("^s^")"
+    |   term2Str (FUN(s, t)) = "FUN "^s^"("^(termlist2Str t)^")"
+    |   term2Str (CONST(s)) = "CONST("^s^")"
+
+    and termlist2Str [] = ""
+    |   termlist2Str (x::[]) = term2Str x
+    |   termlist2Str (x::xs) = (term2Str x)^", "^(termlist2Str xs)
+
+    val temp = (term2Str (VAR("x")));
+
+    fun replacement2Str a b = "replace "^(term2Str a)^" with "^(term2Str b)^"\n"
+
+    val r = (replacement2Str (VAR("x")) (VAR("x")));
+
+    fun contradiction2Str [] = ""
+    |   contradiction2Str ((a, b)::xs) = (replacement2Str a b)^(contradiction2Str xs)
+
+    fun pred2Str (FF) = "\n"
+    |   pred2Str (ATOM(s, t))         = s^"("^(termlist2Str t)^")"
+    |   pred2Str (NOT(p))             = "~("^(pred2Str p)^")"
+    |   pred2Str (AND(p1, p2))        = "("^(pred2Str p1)^")"^" && ("^(pred2Str p2)^")"
+    |   pred2Str (OR(p1, p2))         = "("^(pred2Str p1)^")"^" || ("^(pred2Str p2)^")"
+    |   pred2Str (COND(p1, p2))       = "("^(pred2Str p1)^")"^" IMPLIES ("^(pred2Str p2)^")"
+    |   pred2Str (BIC(p1, p2))        = "("^(pred2Str p1)^")"^" IFF ("^(pred2Str p2)^")"
+    |   pred2Str (ITE(p1, p2, p3))    = "IF ("^(pred2Str p1)^")"^" THEN ("^(pred2Str p2)^") ELSE ("^(pred2Str p3)^")"
+    |   pred2Str (ALL(t, p))          = "forall["^(term2Str t)^"]("^(pred2Str p)^")"
+    |   pred2Str (EX(t, p))           = "exists["^(term2Str t)^"]("^(pred2Str p)^")"
+
+    fun branch2Str (x::[]) = (pred2Str x)
+    |   branch2Str (x::xs) = (pred2Str x)^"\n"^(branch2Str xs)
+    |   branch2Str []   =   ""
+
+
     fun convertITE  (ATOM(s))           = ATOM(s)
     |   convertITE  FF                  = FF
     |   convertITE  (NOT(p))            = NOT(convertITE p)
@@ -135,34 +168,42 @@ struct
     and unifyTermList (x1::y1) (x2::y2) = let 
                                             val dis = (disagreement x1 x2)
                                         in
-                                            if (#1 dis) then 
+                                            if (#1 dis) then (
                                                 let 
                                                     val y1sub = (substituteDisagreementTermList (#2 dis) y1)
                                                     val y2sub = (substituteDisagreementTermList (#2 dis) y2)
                                                     val moreUnify = (unifyTermList y1sub y2sub)
                                                 in
-                                                    if (#1 moreUnify) then (true, (#2 dis)@(#2 moreUnify)) else (false, [])
+                                                    if (#1 moreUnify) then( (true, (#2 dis)@(#2 moreUnify))) else (false, [])
                                                 end
-                                            else
+                                            )
+                                            else(
                                                 (false, [])
+                                            )
                                         end
     |   unifyTermList [] [] = (true, [])
 
     and checkTermList t1 t2 = if ((List.length t1) = (List.length t2)) then (unifyTermList t1 t2) else (false, [])
     
     fun complimentOfAtom s t [] = (false, [])
-    |   complimentOfAtom s t (NOT(ATOM(s1, t1))::xs) = if (s1=s) then (checkTermList t t1) else (complimentOfAtom s t xs)
+    |   complimentOfAtom s t (NOT(ATOM(s1, t1))::xs) =  if (s1=s) then 
+                                                        let
+                                                            val atomComp = (checkTermList t t1) 
+                                                        in
+                                                            if (#1 atomComp) then (atomComp) else (complimentOfAtom s t xs)
+                                                        end
+                                                        else (complimentOfAtom s t xs)
     |   complimentOfAtom s t (x::xs) = (complimentOfAtom s t xs)
 
     fun checkCompliments [] branch = (false, [])
     |   checkCompliments (ATOM(s, t)::xs) branch = let 
                                                         val unified = (complimentOfAtom s t branch)
                                                     in 
-                                                        if (#1 unified) then unified else (checkCompliments xs branch)
+                                                        if (#1 unified) then (unified) else (checkCompliments xs branch)
                                                     end
     |   checkCompliments (x::xs) branch = (checkCompliments xs branch)
 
-    fun branchIsClosed  branch =  (checkCompliments branch branch)
+    fun branchIsClosed  branch = (checkCompliments branch branch)
 
     fun extractLiterals []                     = []
     |   extractLiterals (ATOM(s, t)::xs)       = (ATOM(s, t) :: (extractLiterals xs))
@@ -190,6 +231,7 @@ struct
                                                         val prop = List.nth(propList, indexToProcess)
                                                         val n = indexToProcess
                                                     in
+                                                        print("Branch\n"^(branch2Str propList)^"\n");
                                                         print("No Unification " ^ (Int.toString (List.length propList)) ^" " ^ (Int.toString n) ^ "\n");
                                                         if (isBoolean prop) then
                                                             case prop of
@@ -243,7 +285,9 @@ struct
                                             end
                                             )
                                             end
-end
+    
+
+    end
 
 exception NotVAR (* Binding term in a quantified formula is not a variable *)
 exception NotWFT (* term is not well-formed *)
