@@ -1,152 +1,31 @@
 Branch#0
 
-((forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))) && ((forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))))) && (~(~(p(CONST(a)))))
-(forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))) && ((forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))))
-~(~(p(CONST(a))))
-(forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y)))))))))
-p(CONST(a))
-(p(VAR(0))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(0)))))
-forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))
-forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))
-forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))
-~(p(VAR(0)))
+((forall[VAR(x)]((F(VAR(x))) IMPLIES (G(VAR(x))))) && (forall[VAR(x)](F(VAR(x))))) && (~(G(CONST(a))))
+(forall[VAR(x)]((F(VAR(x))) IMPLIES (G(VAR(x))))) && (forall[VAR(x)](F(VAR(x))))
+~(G(CONST(a)))
+(F(VAR(0))) IMPLIES (G(VAR(0)))
+~(F(VAR(0)))
+F(VAR(1))
+forall[VAR(x)]((F(VAR(x))) IMPLIES (G(VAR(x))))
+forall[VAR(x)](F(VAR(x)))
 
 Contradiction with Branch
 
-replace VAR(0) with CONST(a)
+replace VAR(0) with VAR(1)
 
 
 Branch#1
 
-((forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))) && ((forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))))) && (~(~(p(CONST(a)))))
-(forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))) && ((forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))))
-~(~(p(CONST(a))))
-(forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y)))))))))
-p(CONST(a))
-(p(VAR(0))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(0)))))
-exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(0))))
-(p(CONST(0))) && (q(CONST(0), VAR(0)))
-p(CONST(0))
-q(CONST(0), VAR(0))
-(p(VAR(1))) IMPLIES (r(VAR(1), CONST(a)))
-forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))
-forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))
-forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))
-~(p(VAR(1)))
+((forall[VAR(x)]((F(VAR(x))) IMPLIES (G(VAR(x))))) && (forall[VAR(x)](F(VAR(x))))) && (~(G(CONST(a))))
+(forall[VAR(x)]((F(VAR(x))) IMPLIES (G(VAR(x))))) && (forall[VAR(x)](F(VAR(x))))
+~(G(CONST(a)))
+(F(VAR(0))) IMPLIES (G(VAR(0)))
+forall[VAR(x)](F(VAR(x)))
+forall[VAR(x)]((F(VAR(x))) IMPLIES (G(VAR(x))))
+G(VAR(0))
 
 Contradiction with Branch
 
-replace VAR(1) with CONST(a)
-
-
-Branch#2
-
-((forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))) && ((forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))))) && (~(~(p(CONST(a)))))
-(forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))) && ((forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))))
-~(~(p(CONST(a))))
-(forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y)))))))))
-p(CONST(a))
-(p(VAR(0))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(0)))))
-exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(0))))
-(p(CONST(0))) && (q(CONST(0), VAR(0)))
-p(CONST(0))
-q(CONST(0), VAR(0))
-(p(VAR(1))) IMPLIES (r(VAR(1), CONST(a)))
-r(VAR(1), CONST(a))
-(p(VAR(2))) IMPLIES ((p(VAR(3))) IMPLIES ((r(VAR(3), VAR(2))) IMPLIES (~(q(VAR(2), VAR(3))))))
-forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))
-forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))
-forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))
-forall[VAR(y)]((p(VAR(2))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(2))) IMPLIES (~(q(VAR(2), VAR(y)))))))
-~(p(VAR(2)))
-
-Contradiction with Branch
-
-replace VAR(2) with CONST(a)
-
-
-Branch#3
-
-((forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))) && ((forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))))) && (~(~(p(CONST(a)))))
-(forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))) && ((forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))))
-~(~(p(CONST(a))))
-(forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y)))))))))
-p(CONST(a))
-(p(VAR(0))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(0)))))
-exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(0))))
-(p(CONST(0))) && (q(CONST(0), VAR(0)))
-p(CONST(0))
-q(CONST(0), VAR(0))
-(p(VAR(1))) IMPLIES (r(VAR(1), CONST(a)))
-r(VAR(1), CONST(a))
-(p(VAR(2))) IMPLIES ((p(VAR(3))) IMPLIES ((r(VAR(3), VAR(2))) IMPLIES (~(q(VAR(2), VAR(3))))))
-(p(VAR(3))) IMPLIES ((r(VAR(3), VAR(2))) IMPLIES (~(q(VAR(2), VAR(3)))))
-forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))
-forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))
-forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))
-forall[VAR(y)]((p(VAR(2))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(2))) IMPLIES (~(q(VAR(2), VAR(y)))))))
-~(p(VAR(3)))
-
-Contradiction with Branch
-
-replace VAR(3) with CONST(a)
-
-
-Branch#4
-
-((forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))) && ((forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))))) && (~(~(p(CONST(a)))))
-(forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))) && ((forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))))
-~(~(p(CONST(a))))
-(forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y)))))))))
-p(CONST(a))
-(p(VAR(0))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(0)))))
-exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(0))))
-(p(CONST(0))) && (q(CONST(0), VAR(0)))
-p(CONST(0))
-q(CONST(0), VAR(0))
-(p(VAR(1))) IMPLIES (r(VAR(1), CONST(a)))
-r(VAR(1), CONST(a))
-(p(VAR(2))) IMPLIES ((p(VAR(3))) IMPLIES ((r(VAR(3), VAR(2))) IMPLIES (~(q(VAR(2), VAR(3))))))
-(p(VAR(3))) IMPLIES ((r(VAR(3), VAR(2))) IMPLIES (~(q(VAR(2), VAR(3)))))
-(r(VAR(3), VAR(2))) IMPLIES (~(q(VAR(2), VAR(3))))
-forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))
-forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))
-forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))
-forall[VAR(y)]((p(VAR(2))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(2))) IMPLIES (~(q(VAR(2), VAR(y)))))))
-~(r(VAR(3), VAR(2)))
-
-Contradiction with Branch
-
-replace VAR(3) with VAR(1)
-replace VAR(2) with CONST(a)
-
-
-Branch#5
-
-((forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))) && ((forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))))) && (~(~(p(CONST(a)))))
-(forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))) && ((forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))))
-~(~(p(CONST(a))))
-(forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))) && (forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y)))))))))
-p(CONST(a))
-(p(VAR(0))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(0)))))
-exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(0))))
-(p(CONST(0))) && (q(CONST(0), VAR(0)))
-p(CONST(0))
-q(CONST(0), VAR(0))
-(p(VAR(1))) IMPLIES (r(VAR(1), CONST(a)))
-r(VAR(1), CONST(a))
-(p(VAR(2))) IMPLIES ((p(VAR(3))) IMPLIES ((r(VAR(3), VAR(2))) IMPLIES (~(q(VAR(2), VAR(3))))))
-(p(VAR(3))) IMPLIES ((r(VAR(3), VAR(2))) IMPLIES (~(q(VAR(2), VAR(3)))))
-(r(VAR(3), VAR(2))) IMPLIES (~(q(VAR(2), VAR(3))))
-forall[VAR(x)]((p(VAR(x))) IMPLIES (exists[VAR(y)]((p(VAR(y))) && (q(VAR(y), VAR(x))))))
-forall[VAR(x)]((p(VAR(x))) IMPLIES (r(VAR(x), CONST(a))))
-forall[VAR(x)](forall[VAR(y)]((p(VAR(x))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(x))) IMPLIES (~(q(VAR(x), VAR(y))))))))
-forall[VAR(y)]((p(VAR(2))) IMPLIES ((p(VAR(y))) IMPLIES ((r(VAR(y), VAR(2))) IMPLIES (~(q(VAR(2), VAR(y)))))))
-~(q(VAR(2), VAR(3)))
-
-Contradiction with Branch
-
-replace VAR(2) with CONST(0)
-replace VAR(3) with VAR(0)
+replace VAR(0) with CONST(a)
 
 

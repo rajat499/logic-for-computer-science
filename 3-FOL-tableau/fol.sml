@@ -266,7 +266,7 @@ struct
                                                                     if (noFutureExist propList n) then
                                                                         case prop of 
                                                                         ALL(VAR(s), p)      => let val np = (substituteVar p s (Int.toString(unVar)) false) in formTableau (((tillNth propList n)@[np]@(afterNth propList n)@[prop], n)::branchList) exVar (unVar+1) end
-                                                                    |   NOT(EX(VAR(s), p))  => let val np = NOT(substituteVar p s (Int.toString(unVar)) false) in formTableau (((tillNth propList n)@[np]@(afterNth propList n)@[prop], n)::branchList) exVar (unVar+1) end
+                                                                    |   NOT(EX(VAR(s), p))  => let val np = NOT(substituteVar p s (Int.toString(unVar)) true) in formTableau (((tillNth propList n)@[np]@(afterNth propList n)@[prop], n)::branchList) exVar (unVar+1) end
                                                                     |   _                   => formTableau ((propList, n+1)::branchList) exVar unVar
                                                                     else
                                                                         (
